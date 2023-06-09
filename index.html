@@ -64,16 +64,16 @@
         <div id="game-board"></div>
         <div id="game-over" class="hidden">Wasted</div>
     </div>
-     <div id="buttons-container">
-        <button id="up-button"><i class="fas fa-chevron-up"></i></button>
-        <button id="down-button"><i class="fas fa-chevron-down"></i></button>
-        <button id="left-button"><i class="fas fa-chevron-left"></i></button>
-        <button id="right-button"><i class="fas fa-chevron-right"></i></button>
+    <div id="buttons-container">
+        <button id="up-button">&#8593;</button>
+        <button id="down-button">&#8595;</button>
+        <button id="left-button">&#8592;</button>
+        <button id="right-button">&#8594;</button>
         <button id="start-button">Start</button>
         <button id="reset-button">Reset</button>
     </div>
     <div id="score">Score: 0</div>
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    
     <script>
         let dotSize = 20;
         let gameBoardSize = 300;
@@ -93,6 +93,7 @@
         let downButton = document.getElementById('down-button');
         let leftButton = document.getElementById('left-button');
         let rightButton = document.getElementById('right-button');
+        let resetButton = document.getElementById('reset-button');
         
         function updateGame() {
             if (!gameStarted) {
@@ -236,7 +237,6 @@
         
         document.addEventListener('DOMContentLoaded', (event) => {
             let startButton = document.getElementById('start-button');
-            let resetButton = document.getElementById('reset-button');
         
             startButton.addEventListener('click', function() {
                 if (gameStarted) {
