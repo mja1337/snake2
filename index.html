@@ -58,6 +58,7 @@
 </div>
     <button id="start-button">Start</button>
     <button id="reset-button">Reset</button>
+    <div id="score">Score: 0</div>
     <script>
 let dotSize = 20;
 let gameBoardSize = 300;
@@ -68,9 +69,11 @@ let food = null;
 let gameStarted = false;
 let gameInterval = null;
 let intervalDuration = 200; // initial speed
+let score = 0
 
 let gameBoard = document.getElementById('game-board');
 let gameOverText = document.getElementById('game-over');
+let scoreDisplay = document.getElementById('score');
 
 function updateGame() {
 if (!gameStarted) return;
@@ -108,6 +111,8 @@ if (!gameStarted) return;
     if (food && food.top === head.top && food.left === head.left) {
         // Eat food
         food = null;
+	// Increase score after eating
+	score += 5;
         // Generate poop
         if (Math.random() < 0.33) {
             let lastDot = snake[snake.length - 1];
@@ -135,6 +140,7 @@ if (!gameStarted) return;
 }
 
     renderGame();
+    scoreDisplay.textContent = 'Score: ' + score; // update score display
 }
 
 function gameOver() {
@@ -182,6 +188,8 @@ function resetGame() {
     gameStarted = false;
     gameOverText.classList.add('hidden');
     if (typeof gameInterval !== 'undefined') clearInterval(gameInterval);
+    score = 0; // reset score
+    scoreDisplay.textContent = 'Score: ' + score; // update score display
 }
 
 	    
