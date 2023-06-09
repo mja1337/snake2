@@ -124,110 +124,121 @@
     let gameOverText = document.getElementById('game-over');
     let scoreDisplay = document.getElementById('score');
 
-    function updateGame() {
-        if (!gameStarted) return;
+function updateGame() {
+    if (!gameStarted) return;
+    
+    let head = Object.assign({}, snake[0]); // copy head
+    switch (direction) {
+        case 'right':
+            head.left += dotSize;
+            break;
+        case 'down':
+            head.top += dotSize;
+            break;
+        case 'left':
+            head.left -= dotSize;
+            break;
+        case 'up':
+            head.top -= dotSize;
+            break;
+    }
 
-        let head = Object.assign({}, snake[0]); // copy head
+    snake.unshift(head);
 
-        switch (direction) {
-            case 'right':
-                head.left += dotSize;
-                break;
-            case 'down':
-                head.top += dotSize;
-                break;
-            case 'left':
-                head.left -= dotSize;
-                break;
-            case 'up':
-                head.top -= dotSize;
-                break;
-        }
-
+    if (!initialMove) {
         // Game over conditions
         if (
-            head.top < 0 ||
-            head.left < 0 ||
-            head.top >= gameBoardSize ||
-            head.left >= gameBoardSize ||
+            head.top < 0 || 
+            head.left < 0 || 
+            head.top === gameBoardSize || 
+            head.left === gameBoardSize || 
             snake.find(dot => dot.top === head.top && dot.left === head.left) ||
             poop.find(dot => dot.top === head.top && dot.left === head.left)
         ) {
-            gameStarted = false;
             return gameOver();
         }
-
-        snake.unshift(head);
-
-        if (food && food.top === head.top && food.left === head.left) {
-            // Eat food
-            food = null;
-            score += 5;
-
-            if (Math.random() < 0.33) {
-                let lastDot = snake[snake.length - 1];
-                poop.push(lastDot);
-            }
-
-            intervalDuration = Math.max(50, 200 - snake.length * 5);
-            clearInterval(gameInterval);
-            gameInterval = setInterval(updateGame, intervalDuration);
-        } else {
-            // Remove tail
-            snake.pop();
-        }
-
-        if (poop.find(dot => dot.top === head.top && dot.left === head.left)) {
-            score += 2;
-        }
-
-        if (!food) {
-            let newFood = {};
-            do {
-                newFood = {
-                    top: Math.floor(Math.random() * (gameBoardSize / dotSize)) * dotSize,
-                    left: Math.floor(Math.random() * (gameBoardSize / dotSize)) * dotSize,
-                };
-            } while (snake.find(dot => dot.top === newFood.top && dot.left === newFood.left));
-            food = newFood;
-        }
-
-        renderGame();
-        scoreDisplay.textContent = 'Score: ' + score;
+    } else {
+        initialMove = false;
     }
+
+    if (food && food.top === head.top && food.left === head.left) {
+        // Eat food
+        food = null;
+        // Increase score after eating
+        score += 5;
+        // Generate poop
+        if (Math.random() < 0.33) {
+            let lastDot = snake[snake.length - 1];
+            poop.push(lastDot);
+        }
+        // Decrease the interval as the snake gets longer with a lower limit of 50ms
+        intervalDuration = Math.max(50, 200 - snake.length * 5);
+        clearInterval(gameInterval);
+        gameInterval = setInterval(updateGame, intervalDuration);
+    } else {
+        // Remove tail
+        snake.pop();
+    }
+
+    // Randomly place food
+    if (!food) {
+        let newFood = {};
+        do {
+            newFood = {
+                top: Math.floor(Math.random() * gameBoardSize / dotSize) * dotSize,
+                left: Math.floor(Math.random() * gameBoardSize / dotSize) * dotSize,
+            };
+        } while (snake.find(dot => dot.top === newFood.top && dot.left === newFood.left));
+        food = newFood;
+    }
+
+    renderGame();
+    scoreDisplay.textContent = 'Score: ' + score; // update score display
+}
 
     function gameOver() {
         clearInterval(gameInterval);
         gameOverText.classList.remove('hidden');
     }
 
-    function renderGame() {
-        while (gameBoard.firstChild) {
-            gameBoard.firstChild.remove();
+  function renderGame() {
+    // Clear old dots
+    while (gameBoard.firstChild) {
+        gameBoard.firstChild.remove();
+    }
+
+    // Draw snake
+    snake.forEach(function(dot, index) {
+        let dotElement = document.createElement('div');
+        dotElement.style.top = `${dot.top}px`;
+        dotElement.style.left = `${dot.left}px`;
+        dotElement.classList.add('dot');
+
+        // Apply rainbow colors to the snake
+        if (score > 100) {
+            let hue = (index * 10) % 360;
+            dotElement.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
         }
 
-        snake.forEach(function(dot) {
-            let dotElement = document.createElement('div');
-            dotElement.style.top = `${dot.top}px`;
-            dotElement.style.left = `${dot.left}px`;
-            dotElement.classList.add('dot');
-            gameBoard.appendChild(dotElement);
-        });
+        gameBoard.appendChild(dotElement);
+    });
 
-        let foodElement = document.createElement('div');
-        foodElement.style.top = `${food.top}px`;
-        foodElement.style.left = `${food.left}px`;
-        foodElement.classList.add('food');
-        gameBoard.appendChild(foodElement);
+    // Draw food
+    let foodElement = document.createElement('div');
+    foodElement.style.top = `${food.top}px`;
+    foodElement.style.left = `${food.left}px`;
+    foodElement.classList.add('food');
+    gameBoard.appendChild(foodElement);
 
-        poop.forEach(function(dot) {
-            let poopElement = document.createElement('div');
-            poopElement.style.top = `${dot.top}px`;
-            poopElement.style.left = `${dot.left}px`;
-            poopElement.classList.add('poop');
-            gameBoard.appendChild(poopElement);
-        });
-    }
+    // Draw poop
+    poop.forEach(function(dot) {
+        let poopElement = document.createElement('div');
+        poopElement.style.top = `${dot.top}px`;
+        poopElement.style.left = `${dot.left}px`;
+        poopElement.classList.add('poop');
+        gameBoard.appendChild(poopElement);
+    });
+}
 
     function resetGame() {
         direction = 'right';
