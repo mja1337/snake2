@@ -219,12 +219,21 @@ function resetGame() {
     gameOverText.classList.add('hidden');
     score = 0;
     scoreDisplay.textContent = 'Score: ' + score;
+
+    // Re-enable directional buttons and disable start and reset buttons
+    startButton.disabled = false;
     resetButton.disabled = true;
     upButton.disabled = false;
     downButton.disabled = false;
     leftButton.disabled = false;
     rightButton.disabled = false;
+
+    // Clear the game board
+    while (gameBoard.firstChild) {
+        gameBoard.firstChild.remove();
+    }
 }
+
         
         function handleButtonPress(e) {
             if (!gameStarted) {
