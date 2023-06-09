@@ -73,7 +73,6 @@
         <button id="up-button">Up</button>
         <button id="right-button">Right</button>
         <button id="start-button">Start</button>
-        <button id="reset-button">Reset</button>
     </div>
     <div id="score">Score: 0</div>
     <div id="high-score">High Score: 0</div>
@@ -100,7 +99,6 @@
         let leftButton = document.getElementById('left-button');
         let rightButton = document.getElementById('right-button');
         let startButton = document.getElementById('start-button');
-        let resetButton = document.getElementById('reset-button');
         
         function updateGame() {
             if (!gameStarted) {
@@ -235,6 +233,7 @@
             rightButton.disabled = false;
             startButton.textContent = 'Start';
         }
+
         
         function handleButtonPress(e) {
             if (!gameStarted) {
@@ -271,12 +270,6 @@
                 leftButton.disabled = false;
                 rightButton.disabled = false;
                 startButton.textContent = 'Restart';
-            });
-        
-            resetButton.addEventListener('click', function() {
-                if (gameStarted) {
-                    resetGame();
-                }
             });
         
             upButton.addEventListener('click', handleButtonPress);
