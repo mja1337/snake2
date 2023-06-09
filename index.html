@@ -208,22 +208,24 @@
             });
         }
         
-        function resetGame() {
-            direction = 'right';
-            snake = [{ top: 0, left: 0 }];
-            poop = [];
-            food = null;
-            gameStarted = false;
-            gameOverText.classList.add('hidden');
-            if (typeof gameInterval !== 'undefined') clearInterval(gameInterval);
-            score = 0; // reset score
-            scoreDisplay.textContent = 'Score: ' + score; // update score display
-            resetButton.disabled = true; // Disable reset button
-            upButton.disabled = false;
-            downButton.disabled = false;
-            leftButton.disabled = false;
-            rightButton.disabled = false;
-        }
+function resetGame() {
+    direction = 'right';
+    snake = [{ top: 0, left: 0 }];
+    poop = [];
+    food = null;
+    gameStarted = false;
+    gameOverText.classList.add('hidden');
+    clearInterval(gameInterval); // Clear game interval
+    gameInterval = null; // Reset game interval
+    score = 0; // reset score
+    scoreDisplay.textContent = 'Score: ' + score; // update score display
+    resetButton.disabled = true; // Disable reset button
+    upButton.disabled = false;
+    downButton.disabled = false;
+    leftButton.disabled = false;
+    rightButton.disabled = false;
+}
+
         
         function handleButtonPress(e) {
             if (!gameStarted) {
