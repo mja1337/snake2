@@ -7,7 +7,6 @@
         height: 300px;
         width: 300px;
         border: 1px solid black;
-        margin-bottom: 20px;
     }
 
     #game-board {
@@ -58,11 +57,18 @@
         display: flex;
         justify-content: center;
         margin-top: 10px;
+        margin-bottom: 10px;
     }
 
     #controls button {
         font-size: 24px;
         padding: 5px 10px;
+        flex: 1;
+    }
+
+    #start-button,
+    #reset-button {
+        width: 100%;
     }
 
     #score {
@@ -82,9 +88,11 @@
         <button id="right-button">&#8680;</button>
         <button id="down-button">&#8681;</button>
     </div>
+    <div id="button-container">
+        <button id="start-button">Start</button>
+        <button id="reset-button">Reset</button>
+    </div>
     <div id="score">Score: 0</div>
-    <button id="start-button">Start</button>
-    <button id="reset-button">Reset</button>
     <script>
     let dotSize = 20;
     let gameBoardSize = 300;
