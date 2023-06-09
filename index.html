@@ -38,19 +38,13 @@
         position: absolute;
         top: 300px;
         left: 0;
-        width: 600px;
+        width: 300px;
         text-align: center;
         font-size: 48px;
         color: red;
     }
-	    
-    #start-button {
-	    position: absolute;
-	    top: 150px;
-	    left: 100px;
-    }
 	
-    </style>
+</style>
 </head>
 <body>
     <div id="game-board"></div>
@@ -177,8 +171,6 @@ startButton.addEventListener('click', function() {
 	gameStarted = true;
 	gameInterval = setInterval(updateGame, 200);
 });
-	    
-let gameInterval = setInterval(updateGame, 200);
 
 window.addEventListener('keydown', function(e) {
     switch (e.key) {
