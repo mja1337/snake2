@@ -260,30 +260,32 @@ function resetGame() {
             startButton.addEventListener('click', function() {
                 if (gameStarted) {
                     return;
-                }
-        
-                gameStarted = true;
-                gameInterval = setInterval(updateGame, intervalDuration);
-                gameOverText.classList.add('hidden');
-                resetButton.disabled = true;
-                upButton.disabled = false;
-                downButton.disabled = false;
-                leftButton.disabled = false;
-                rightButton.disabled = false;
-            });
-        
-            resetButton.addEventListener('click', function() {
-                if (gameStarted) {
-                    return;
-                }
-        
-                resetGame();
-                resetButton.disabled = true;
-                upButton.disabled = true;
-                downButton.disabled = true;
-                leftButton.disabled = true;
-                rightButton.disabled = true;
-            });
+                    }
+
+    resetGame();
+    gameStarted = true;
+    gameInterval = setInterval(updateGame, intervalDuration);
+    gameOverText.classList.add('hidden');
+    resetButton.disabled = true;
+    upButton.disabled = false;
+    downButton.disabled = false;
+    leftButton.disabled = false;
+    rightButton.disabled = false;
+});
+
+resetButton.addEventListener('click', function() {
+    if (!gameStarted) {
+        return;
+    }
+
+    resetGame();
+    resetButton.disabled = true;
+    upButton.disabled = true;
+    downButton.disabled = true;
+    leftButton.disabled = true;
+    rightButton.disabled = true;
+});
+
         
             upButton.addEventListener('click', handleButtonPress);
             downButton.addEventListener('click', handleButtonPress);
