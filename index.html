@@ -7,6 +7,7 @@
         height: 300px;
         width: 300px;
         border: 1px solid black;
+        margin-bottom: 10px;
     }
 
     #game-board {
@@ -55,9 +56,8 @@
 
     #controls {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         margin-top: 10px;
-        margin-bottom: 10px;
     }
 
     #controls button {
@@ -66,14 +66,21 @@
         flex: 1;
     }
 
-    #start-button,
-    #reset-button {
-        width: 100%;
-    }
-
     #score {
         text-align: center;
         font-size: 24px;
+    }
+
+    #button-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    #button-container button {
+        flex: 1;
+        max-width: 150px;
+        margin: 0 5px;
     }
     </style>
 </head>
