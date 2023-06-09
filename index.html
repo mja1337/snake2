@@ -142,6 +142,31 @@ if (!gameStarted) return;
     renderGame();
     scoreDisplay.textContent = 'Score: ' + score; // update score display
 }
+	    
+function resetGame() {
+    direction = 'right';
+    snake = [{ top: 0, left: 0 }];
+    poop = [];
+    food = null;
+    gameStarted = false;
+    gameOverText.classList.add('hidden');
+    if (typeof gameInterval !== 'undefined') clearInterval(gameInterval);
+    score = 0; // reset score
+    scoreDisplay.textContent = 'Score: ' + score; // update score display
+}
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    let startButton = document.getElementById('start-button');
+    startButton.addEventListener('click', function() {
+	  if (!gameStarted) {
+	    gameStarted = true;
+	    gameInterval = setInterval(updateGame, intervalDuration);
+	  }
+    });
+    
+    let resetButton = document.getElementById('reset-button');
+    resetButton.addEventListener('click', resetGame);
+});
 
 function gameOver() {
     clearInterval(gameInterval);
@@ -179,29 +204,6 @@ function renderGame() {
         gameBoard.appendChild(poopElement);
     });
 }
-
-function resetGame() {
-    direction = 'right';
-    snake = [{ top: 0, left: 0 }];
-    poop = [];
-    food = null;
-    gameStarted = false;
-    gameOverText.classList.add('hidden');
-    if (typeof gameInterval !== 'undefined') clearInterval(gameInterval);
-    score = 0; // reset score
-    scoreDisplay.textContent = 'Score: ' + score; // update score display
-}
-
-	    
-document.addEventListener('DOMContentLoaded', (event) => {
-    let startButton = document.getElementById('start-button');
-    startButton.addEventListener('click', function() {
-	    gameStarted = true;
-	    gameInterval = setInterval(updateGame, 200);
-    });
-    
-    document.getElementById('reset-button').addEventListener('click', resetGame);
-});
 
  window.addEventListener('keydown', function(e) {
     switch (e.key) {
