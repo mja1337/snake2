@@ -49,7 +49,6 @@
 <body>
     <div id="game-board"></div>
     <div id="game-over" class="hidden">Game Over</div>
-    <button id="start-button">Start</button>
     <button id="reset-button">Reset</button>
     <script>
 let dotSize = 20;
@@ -62,7 +61,6 @@ let gameStarted = false;
 
 let gameBoard = document.getElementById('game-board');
 let gameOverText = document.getElementById('game-over');
-let startButton = document.getElementById('start-button');
 
 function updateGame() {
 if (!gameStarted) return;
@@ -91,6 +89,7 @@ if (!gameStarted) return;
         snake.find(dot => dot.top === head.top && dot.left === head.left) ||
         poop.find(dot => dot.top === head.top && dot.left === head.left)
     ) {
+	gameStarted = false;
         return gameOver();
     }
 
@@ -111,11 +110,15 @@ if (!gameStarted) return;
 
     // Randomly place food
     if (!food) {
-        food = {
+    let newFood = {};
+    do {
+        newFood = {
             top: Math.floor(Math.random() * gameBoardSize / dotSize) * dotSize,
             left: Math.floor(Math.random() * gameBoardSize / dotSize) * dotSize,
         };
-    }
+    } while (snake.find(dot => dot.top === newFood.top && dot.left === newFood.left));
+    food = newFood;
+}
 
     renderGame();
 }
@@ -170,6 +173,7 @@ function resetGame() {
 startButton.addEventListener('click', function() {
 	gameStarted = true;
 	gameInterval = setInterval(updateGame, 200);
+	
 });
 
 window.addEventListener('keydown', function(e) {
@@ -191,6 +195,6 @@ window.addEventListener('keydown', function(e) {
 
 document.getElementById('reset-button').addEventListener('click', resetGame);
 
-    </script>
+</script>
 </body>
 </html>
