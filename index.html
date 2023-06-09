@@ -54,7 +54,7 @@
 <body>
 <div id="game-container">
     <div id="game-board"></div>
-	<div id="game-over" class="hidden">Game Over</div>
+    <div id="game-over" class="hidden">Game Over</div>
 </div>
     <button id="start-button">Start</button>
     <button id="reset-button">Reset</button>
@@ -67,6 +67,7 @@ let poop = [];
 let food = null;
 let gameStarted = false;
 let gameInterval = null;
+let intervalDuration = 200; // initial speed
 
 let gameBoard = document.getElementById('game-board');
 let gameOverText = document.getElementById('game-over');
@@ -112,6 +113,10 @@ if (!gameStarted) return;
             let lastDot = snake[snake.length - 1];
             poop.push(lastDot);
         }
+	// Decrease the interval as the snake gets longer with a lower limit of 50ms
+	intervalDuration = Math.max(50, 200 -- snake.length * 5);
+	clearInterval(gameInterval);
+	gameInterval = setInterval(updateGame, intervalDuration);
     } else {
         // Remove tail
         snake.pop();
