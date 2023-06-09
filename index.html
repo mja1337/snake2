@@ -198,12 +198,6 @@
                 dotElement.style.top = `${dot.top}px`;
                 dotElement.style.left = `${dot.left}px`;
                 dotElement.classList.add('dot');
-                
-             // Apply rainbow colors to the snake
-            if (score > 5) {
-            let hue = (index * 10) % 360;
-            dotElement.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
-        }
                 gameBoard.appendChild(dotElement);
             });
         
