@@ -2,13 +2,7 @@
 <html>
 <head>
     <style>
-    #game-wrapper {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	height: 100%;
-	width: 100%;
-    }
+	    
     #game-container {
 	display: relative;
 	height: 300px;
@@ -22,7 +16,7 @@
         border: 1px solid black;
     }
     #game-over {
-        position: absolute;
+        position: relative;
         top: 50%;
         left: 50%;
 	transform: translate(-50%, -50%);
@@ -30,7 +24,6 @@
         text-align: center;
         font-size: 48px;
         color: red;
-	margin-top: -24px;  /* Half of the font size to vertically center */
     }
 	    
     #controls {
@@ -84,12 +77,10 @@
 </style>
 </head>
 <body>
-<div id="game-wrapper">	
     <div id="game-container">
         <div id="game-board"></div>
         <div id="game-over" class="hidden">Wasted</div>
     </div>
-</div>
 	
 <div id="controls">
     <div id="direction-buttons" style="align-self: flex-start;">
