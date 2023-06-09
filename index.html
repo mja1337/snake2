@@ -59,6 +59,8 @@
         justify-content: space-between;
         margin-top: 10px;
         width: 300px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     #controls button {
@@ -69,7 +71,7 @@
     }
 
     #score {
-        text-align: left;
+        text-align: center;
         font-size: 24px;
         width: 300px;
         margin-left: auto;
@@ -78,7 +80,7 @@
 
     #button-container {
         display: flex;
-        justify-content: left;
+        justify-content: center;
         margin-top: 10px;
         width: 300px;
         margin-left: auto;
@@ -108,6 +110,7 @@
         <button id="reset-button">Reset</button>
     </div>
     <div id="score">Score: 0</div>
+    <div id="high-score">High Score: 0</div>
     <script>
     let dotSize = 20;
     let gameBoardSize = 300;
@@ -119,11 +122,13 @@
     let gameInterval = null;
     let intervalDuration = 200; // initial speed
     let score = 0;
-
+    let highScore = localStorage.getItem('snakeHighScore') || 0;
+        
     let gameBoard = document.getElementById('game-board');
     let gameOverText = document.getElementById('game-over');
     let scoreDisplay = document.getElementById('score');
-
+    let highScoreDisplay = document.getElementById('high-score');
+        
 function updateGame() {
     if (!gameStarted) return;
     
@@ -194,6 +199,13 @@ function updateGame() {
 
     renderGame();
     scoreDisplay.textContent = 'Score: ' + score; // update score display
+    
+    // Check if the current score is higher than the stored high score
+        if (score > highScore) {
+            highScore = score;
+            localStorage.setItem('snakeHighScore', highScore);
+            highScoreDisplay.textContent = 'High Score: ' + highScore;
+        }
 }
 
     function gameOver() {
@@ -260,6 +272,9 @@ function updateGame() {
                 gameInterval = setInterval(updateGame, intervalDuration);
             }
         });
+        
+    // Initialize high score display
+    highScoreDisplay.textContent = 'High Score: ' + highScore;
 
         let resetButton = document.getElementById('reset-button');
         resetButton.addEventListener('click', resetGame);
