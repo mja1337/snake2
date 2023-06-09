@@ -215,16 +215,35 @@ function resetGame() {
     food = null;
     gameStarted = false;
     gameOverText.classList.add('hidden');
-    clearInterval(gameInterval); // Clear game interval
-    gameInterval = null; // Reset game interval
-    score = 0; // reset score
-    scoreDisplay.textContent = 'Score: ' + score; // update score display
-    resetButton.disabled = true; // Disable reset button
+    clearInterval(gameInterval);
+    gameInterval = null;
+    score = 0;
+    scoreDisplay.textContent = 'Score: ' + score;
+    resetButton.disabled = true;
     upButton.disabled = false;
     downButton.disabled = false;
     leftButton.disabled = false;
     rightButton.disabled = false;
+
+    // Clear event listeners for directional buttons
+    upButton.removeEventListener('click', handleButtonPress);
+    downButton.removeEventListener('click', handleButtonPress);
+    leftButton.removeEventListener('click', handleButtonPress);
+    rightButton.removeEventListener('click', handleButtonPress);
+
+    // Add event listeners back to directional buttons
+    upButton.addEventListener('click', handleButtonPress);
+    downButton.addEventListener('click', handleButtonPress);
+    leftButton.addEventListener('click', handleButtonPress);
+    rightButton.addEventListener('click', handleButtonPress);
+
+    // Clear event listeners for keyboard arrow keys
+    window.removeEventListener('keydown', handleKeyPress);
+
+    // Add event listeners back to keyboard arrow keys
+    window.addEventListener('keydown', handleKeyPress);
 }
+
 
         
         function handleButtonPress(e) {
