@@ -34,6 +34,18 @@
         font-size: 24px;
         padding: 5px 10px;
     }
+	    
+    #button-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+    }
+	    
+    #button-container button {
+        font-size: 16px;
+        margin: 0 5px;
+        padding: 5px 10px;
+    }
 	
     .dot {
         position: absolute;
@@ -68,13 +80,17 @@
     <div id="game-over" class="hidden">Game Over</div>
 </div>
 <div id="controls">
+    <div id="direction-buttons">
         <button id="up-button">&#8679;</button>
         <button id="left-button">&#8678;</button>
         <button id="right-button">&#8680;</button>
         <button id="down-button">&#8681;</button>
-</div>
+    </div>
+<div id="button-container">
     <button id="start-button">Start</button>
     <button id="reset-button">Reset</button>
+</div>
+</div>
     <div id="score">Score: 0</div>
 <script>
 let dotSize = 20;
