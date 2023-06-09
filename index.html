@@ -273,24 +273,24 @@
         scoreDisplay.textContent = 'Score: ' + score;
     }
 
-    function handleButtonPress(e) {
-        if (!gameStarted) return;
+function handleButtonPress(direction) {
+    if (!gameStarted) return;
 
-        switch (e.target.id) {
-            case 'up-button':
-                if (direction !== 'down') direction = 'up';
-                break;
-            case 'down-button':
-                if (direction !== 'up') direction = 'down';
-                break;
-            case 'left-button':
-                if (direction !== 'right') direction = 'left';
-                break;
-            case 'right-button':
-                if (direction !== 'left') direction = 'right';
-                break;
-        }
+    switch (direction) {
+        case 'up':
+            if (direction !== 'down') direction = 'up';
+            break;
+        case 'down':
+            if (direction !== 'up') direction = 'down';
+            break;
+        case 'left':
+            if (direction !== 'right') direction = 'left';
+            break;
+        case 'right':
+            if (direction !== 'left') direction = 'right';
+            break;
     }
+}
 
     document.getElementById('start-button').addEventListener('click', function() {
         if (!gameStarted) {
@@ -300,12 +300,20 @@
         }
     });
 
-    document.getElementById('reset-button').addEventListener('click', resetGame);
+document.getElementById('reset-button').addEventListener('click', resetGame);
 
-    document.getElementById('up-button').addEventListener('click', handleButtonPress);
-    document.getElementById('down-button').addEventListener('click', handleButtonPress);
-    document.getElementById('left-button').addEventListener('click', handleButtonPress);
-    document.getElementById('right-button').addEventListener('click', handleButtonPress);
+document.getElementById('up-button').addEventListener('click', function() {
+    handleButtonPress('up');
+});
+document.getElementById('down-button').addEventListener('click', function() {
+    handleButtonPress('down');
+});
+document.getElementById('left-button').addEventListener('click', function() {
+    handleButtonPress('left');
+});
+document.getElementById('right-button').addEventListener('click', function() {
+    handleButtonPress('right');
+});
 
     // Initialize high score display
     highScoreDisplay.textContent = 'High Score: ' + highScore;
