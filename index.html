@@ -200,7 +200,7 @@
                 dotElement.classList.add('dot');
                 
              // Apply rainbow colors to the snake
-            if (score > highScore) {
+            if (score > 5) {
             let hue = (index * 10) % 360;
             dotElement.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
         }
