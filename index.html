@@ -136,7 +136,7 @@
     let scoreDisplay = document.getElementById('score');
     let highScoreDisplay = document.getElementById('high-score');
 
-    function updateGame() {
+   function updateGame() {
     if (!gameStarted) {
         return;
     }
@@ -161,8 +161,8 @@
     if (
         head.top < 0 ||
         head.left < 0 ||
-        head.top === gameBoardSize ||
-        head.left === gameBoardSize ||
+        head.top >= gameBoardSize ||
+        head.left >= gameBoardSize ||
         snake.find((dot) => dot.top === head.top && dot.left === head.left) ||
         poop.find((dot) => dot.top === head.top && dot.left === head.left)
     ) {
@@ -212,6 +212,7 @@
         highScoreDisplay.textContent = 'High Score: ' + highScore;
     }
 }
+
     function gameOver() {
         clearInterval(gameInterval);
         gameOverText.classList.remove('hidden');
