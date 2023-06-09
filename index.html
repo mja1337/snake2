@@ -119,7 +119,7 @@ if (!gameStarted) return;
             poop.push(lastDot);
         }
 	// Decrease the interval as the snake gets longer with a lower limit of 50ms
-	intervalDuration = Math.max(50, 200 -- snake.length * 5);
+	intervalDuration = Math.max(50, 200 - snake.length * 5);
 	clearInterval(gameInterval);
 	gameInterval = setInterval(updateGame, intervalDuration);
     } else {
