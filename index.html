@@ -89,7 +89,7 @@
         let gameInterval = null;
         let intervalDuration = 200; // initial speed
         let score = 0;
-        let highscore = 0;
+        let highScore = 0;
         
         let gameBoard = document.getElementById('game-board');
         let gameOverText = document.getElementById('game-over');
@@ -184,7 +184,7 @@
             downButton.disabled = true;
             leftButton.disabled = true;
             rightButton.disabled = true;
-            document.getElementById('start-button').textContent = 'Restart';
+            startButton.textContent = 'Restart';
         }
         
         function renderGame() {
@@ -219,7 +219,7 @@
             });
         }
         
-function resetGame() {
+        function resetGame() {
             direction = 'right';
             snake = [{ top: 0, left: 0 }];
             poop = [];
@@ -233,9 +233,8 @@ function resetGame() {
             downButton.disabled = false;
             leftButton.disabled = false;
             rightButton.disabled = false;
-            document.getElementById('start-button').textContent = 'Start';
+            startButton.textContent = 'Start';
         }
-
         
         function handleButtonPress(e) {
             if (!gameStarted) {
@@ -258,10 +257,7 @@ function resetGame() {
             }
         }
         
-document.addEventListener('DOMContentLoaded', (event) => {
-            let startButton = document.getElementById('start-button');
-            let resetButton = document.getElementById('reset-button');
-        
+        document.addEventListener('DOMContentLoaded', (event) => {
             startButton.addEventListener('click', function() {
                 if (gameStarted) {
                     resetGame();
@@ -274,21 +270,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 downButton.disabled = false;
                 leftButton.disabled = false;
                 rightButton.disabled = false;
-                document.getElementById('start-button').textContent = 'Restart';
+                startButton.textContent = 'Restart';
             });
         
-resetButton.addEventListener('click', function() {
-    if (gameStarted) {
-        resetGame();
-    }
- });
-
+            resetButton.addEventListener('click', function() {
+                if (gameStarted) {
+                    resetGame();
+                }
+            });
         
             upButton.addEventListener('click', handleButtonPress);
             downButton.addEventListener('click', handleButtonPress);
             leftButton.addEventListener('click', handleButtonPress);
             rightButton.addEventListener('click', handleButtonPress);
-        });
         
             // Retrieve high score from local storage
             highScore = parseInt(localStorage.getItem('snakeHighScore')) || 0;
