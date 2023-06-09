@@ -224,30 +224,6 @@ function resetGame() {
     downButton.disabled = false;
     leftButton.disabled = false;
     rightButton.disabled = false;
-
-    // Clear event listeners for directional buttons
-    upButton.removeEventListener('click', handleButtonPress);
-    downButton.removeEventListener('click', handleButtonPress);
-    leftButton.removeEventListener('click', handleButtonPress);
-    rightButton.removeEventListener('click', handleButtonPress);
-
-    // Add event listeners back to directional buttons
-    upButton.addEventListener('click', handleButtonPress);
-    downButton.addEventListener('click', handleButtonPress);
-    leftButton.addEventListener('click', handleButtonPress);
-    rightButton.addEventListener('click', handleButtonPress);
-
-    // Clear event listeners for keyboard arrow keys
-    window.removeEventListener('keydown', handleKeyPress);
-
-    // Add event listeners back to keyboard arrow keys
-    window.addEventListener('keydown', handleKeyPress);
-
-    // Reset the game interval
-    if (gameInterval !== null) {
-        clearInterval(gameInterval);
-        gameInterval = setInterval(updateGame, intervalDuration);
-    }
 }
 
 
