@@ -137,84 +137,81 @@
     let highScoreDisplay = document.getElementById('high-score');
 
     function updateGame() {
-        if (!gameStarted) return;
-
-        let head = Object.assign({}, snake[0]); // copy head
-        switch (direction) {
-            case 'right':
-                head.left += dotSize;
-                break;
-            case 'down':
-                head.top += dotSize;
-                break;
-            case 'left':
-                head.left -= dotSize;
-                break;
-            case 'up':
-                head.top -= dotSize;
-                break;
-        }
-
-        snake.unshift(head);
-
-        if (!initialMove) {
-            // Game over conditions
-            if (
-                head.top < 0 || 
-                head.left < 0 || 
-                head.top === gameBoardSize || 
-                head.left === gameBoardSize || 
-                snake.find(dot => dot.top === head.top && dot.left === head.left) ||
-                poop.find(dot => dot.top === head.top && dot.left === head.left)
-            ) {
-                return gameOver();
-            }
-        } else {
-            initialMove = false;
-        }
-
-        if (food && food.top === head.top && food.left === head.left) {
-            // Eat food
-            food = null;
-            // Increase score after eating
-            score += 5;
-            // Generate poop
-            if (Math.random() < 0.33) {
-                let lastDot = snake[snake.length - 1];
-                poop.push(lastDot);
-            }
-            // Decrease the interval as the snake gets longer with a lower limit of 50ms
-            intervalDuration = Math.max(50, 200 - snake.length * 5);
-            clearInterval(gameInterval);
-            gameInterval = setInterval(updateGame, intervalDuration);
-        } else {
-            // Remove tail
-            snake.pop();
-        }
-
-        // Randomly place food
-        if (!food) {
-            let newFood = {};
-            do {
-                newFood = {
-                    top: Math.floor(Math.random() * gameBoardSize / dotSize) * dotSize,
-                    left: Math.floor(Math.random() * gameBoardSize / dotSize) * dotSize,
-                };
-            } while (snake.find(dot => dot.top === newFood.top && dot.left === newFood.left));
-            food = newFood;
-        }
-
-        renderGame();
-        scoreDisplay.textContent = 'Score: ' + score; // update score display
-
-        // Check if the current score is higher than the stored high score
-        if (score > highScore) {
-            highScore = score;
-            localStorage.setItem('snakeHighScore', highScore);
-            highScoreDisplay.textContent = 'High Score: ' + highScore;
-        }
+    if (!gameStarted) {
+        return;
     }
 
+    let head = Object.assign({}, snake[0]); // copy head
+    switch (direction) {
+        case 'right':
+            head.left += dotSize;
+            break;
+        case 'down':
+            head.top += dotSize;
+            break;
+        case 'left':
+            head.left -= dotSize;
+            break;
+        case 'up':
+            head.top -= dotSize;
+            break;
+    }
+
+    // Game over conditions
+    if (
+        head.top < 0 ||
+        head.left < 0 ||
+        head.top === gameBoardSize ||
+        head.left === gameBoardSize ||
+        snake.find((dot) => dot.top === head.top && dot.left === head.left) ||
+        poop.find((dot) => dot.top === head.top && dot.left === head.left)
+    ) {
+        return gameOver();
+    }
+
+    snake.unshift(head);
+
+    if (food && food.top === head.top && food.left === head.left) {
+        // Eat food
+        food = null;
+        // Increase score after eating
+        score += 5;
+        // Generate poop
+        if (Math.random() < 0.33) {
+            let lastDot = snake[snake.length - 1];
+            poop.push(lastDot);
+        }
+        // Decrease the interval as the snake gets longer with a lower limit of 50ms
+        intervalDuration = Math.max(50, 200 - snake.length * 5);
+        clearInterval(gameInterval);
+        gameInterval = setInterval(updateGame, intervalDuration);
+    } else {
+        // Remove tail
+        snake.pop();
+    }
+
+    // Randomly place food
+    if (!food) {
+        let newFood = {};
+        do {
+            newFood = {
+                top: Math.floor(Math.random() * gameBoardSize / dotSize) * dotSize,
+                left: Math.floor(Math.random() * gameBoardSize / dotSize) * dotSize,
+            };
+        } while (snake.find((dot) => dot.top === newFood.top && dot.left === newFood.left));
+        food = newFood;
+    }
+
+    renderGame();
+    scoreDisplay.textContent = 'Score: ' + score; // update score display
+
+    // Check if the current score is higher than the stored high score
+    if (score > highScore) {
+        highScore = score;
+        localStorage.setItem('snakeHighScore', highScore);
+        highScoreDisplay.textContent = 'High Score: ' + highScore;
+    }
+}
     function gameOver() {
         clearInterval(gameInterval);
         gameOverText.classList.remove('hidden');
