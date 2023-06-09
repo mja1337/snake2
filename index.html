@@ -242,6 +242,12 @@ function resetGame() {
 
     // Add event listeners back to keyboard arrow keys
     window.addEventListener('keydown', handleKeyPress);
+
+    // Reset the game interval
+    if (gameInterval !== null) {
+        clearInterval(gameInterval);
+        gameInterval = setInterval(updateGame, intervalDuration);
+    }
 }
 
 
