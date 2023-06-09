@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+    /* ... Paste your CSS here ... */
+    #game-board {
+        position: relative;
+        height: 600px;
+        width: 600px;
+        border: 1px solid black;
+    }
+
+    .dot {
+        position: absolute;
+        height: 20px;
+        width: 20px;
+        background-color: #000;
+    }
+
+    .food {
+        position: absolute;
+        height: 20px;
+        width: 20px;
+        background-color: #f00;
+    }
+
+    .poop {
+        position: absolute;
+        height: 20px;
+        width: 20px;
+        background-color: #964B00; /* Brown color */
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    #game-over {
+        position: absolute;
+        top: 300px;
+        left: 0;
+        width: 600px;
+        text-align: center;
+        font-size: 48px;
+        color: red;
+    }
+	
+    </style>
+</head>
+<body>
+    <div id="game-board"></div>
+    <div id="game-over" class="hidden">Game Over</div>
+    <button id="reset-button">Reset</button>
+    <script>
+let dotSize = 20;
+let gameBoardSize = 600;
+let direction = 'right';
+let snake = [{ top: 0, left: 0 }];
+let poop = [];
+let food = null;
+
+let gameBoard = document.getElementById('game-board');
+let gameOverText = document.getElementById('game-over');
+
+function updateGame() {
+    let head = Object.assign({}, snake[0]); // copy head
+    switch (direction) {
+        case 'right':
+            head.left += dotSize;
+            break;
+        case 'down':
+            head.top += dotSize;
+            break;
+        case 'left':
+            head.left -= dotSize;
+            break;
+        case 'up':
+            head.top -= dotSize;
+            break;
+    }
+
+    // Game over conditions
+    if (
+        head.top < 0 || 
+        head.left < 0 || 
+        head.top === gameBoardSize || 
+        head.left === gameBoardSize || 
+        snake.find(dot => dot.top === head.top && dot.left === head.left) ||
+        poop.find(dot => dot.top === head.top && dot.left === head.left)
+    ) {
+        return gameOver();
+    }
+
+    snake.unshift(head);
+
+    if (food && food.top === head.top && food.left === head.left) {
+        // Eat food
+        food = null;
+        // Generate poop
+        if (Math.random() < 0.33) {
+            let lastDot = snake[snake.length - 1];
+            poop.push(lastDot);
+        }
+    } else {
+        // Remove tail
+        snake.pop();
+    }
+
+    // Randomly place food
+    if (!food) {
+        food = {
+            top: Math.floor(Math.random() * gameBoardSize / dotSize) * dotSize,
+            left: Math.floor(Math.random() * gameBoardSize / dotSize) * dotSize,
+        };
+    }
+
+    renderGame();
+}
+
+function gameOver() {
+    clearInterval(gameInterval);
+    gameOverText.classList.remove('hidden');
+}
+
+function renderGame() {
+    // Clear old dots
+    while (gameBoard.firstChild) {
+        gameBoard.firstChild.remove();
+    }
+
+    // Draw snake
+    snake.forEach(function(dot) {
+        let dotElement = document.createElement('div');
+        dotElement.style.top = `${dot.top}px`;
+        dotElement.style.left = `${dot.left}px`;
+        dotElement.classList.add('dot');
+        gameBoard.appendChild(dotElement);
+    });
+
+    // Draw food
+    let foodElement = document.createElement('div');
+    foodElement.style.top = `${food.top}px`;
+    foodElement.style.left = `${food.left}px`;
+    foodElement.classList.add('food');
+    gameBoard.appendChild(foodElement);
+
+    // Draw poop
+    poop.forEach(function(dot) {
+        let poopElement = document.createElement('div');
+        poopElement.style.top = `${dot.top}px`;
+        poopElement.style.left = `${dot.left}px`;
+        poopElement.classList.add('poop');
+        gameBoard.appendChild(poopElement);
+    });
+}
+
+function resetGame() {
+    direction = 'right';
+    snake = [{ top: 0, left: 0 }];
+    poop = [];
+    food = null;
+    gameOverText.classList.add('hidden');
+    if (typeof gameInterval !== 'undefined') clearInterval(gameInterval);
+    gameInterval = setInterval(updateGame, 200);
+}
+
+let gameInterval = setInterval(updateGame, 200);
+
+window.addEventListener('keydown', function(e) {
+    switch (e.key) {
+        case 'ArrowUp':
+            if (direction !== 'down') direction = 'up';
+            break;
+        case 'ArrowDown':
+            if (direction !== 'up') direction = 'down';
+            break;
+        case 'ArrowLeft':
+            if (direction !== 'right') direction = 'left';
+            break;
+        case 'ArrowRight':
+            if (direction !== 'left') direction = 'right';
+            break;
+    }
+});
+
+document.getElementById('reset-button').addEventListener('click', resetGame);
+
+    </script>
+</body>
+</html>
