@@ -178,12 +178,6 @@ function resetGame() {
     if (typeof gameInterval !== 'undefined') clearInterval(gameInterval);
 }
 
-startButton.addEventListener('click', function() {
-	gameStarted = true;
-	gameInterval = setInterval(updateGame, 200);
-	
-});
-
 window.addEventListener('keydown', function(e) {
     switch (e.key) {
         case 'ArrowUp':
@@ -200,9 +194,16 @@ window.addEventListener('keydown', function(e) {
             break;
     }
 });
-
-document.getElementById('reset-button').addEventListener('click', resetGame);
-
+	    
+document.addEventListener('DOMContentLoaded', (event) => {
+    let startButton = document.getElementById('start-button');
+    startButton.addEventListener('click', function() {
+	    gameStarted = true;
+	    gameInterval = setInterval(updateGame, 200);
+    });
+    
+    document.getElementById('reset-button').addEventListener('click', resetGame);
+});
 </script>
 </body>
 </html>
