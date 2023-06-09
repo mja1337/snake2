@@ -66,6 +66,7 @@ let snake = [{ top: 0, left: 0 }];
 let poop = [];
 let food = null;
 let gameStarted = false;
+let gameInterval = null;
 
 let gameBoard = document.getElementById('game-board');
 let gameOverText = document.getElementById('game-over');
@@ -178,7 +179,18 @@ function resetGame() {
     if (typeof gameInterval !== 'undefined') clearInterval(gameInterval);
 }
 
-window.addEventListener('keydown', function(e) {
+	    
+document.addEventListener('DOMContentLoaded', (event) => {
+    let startButton = document.getElementById('start-button');
+    startButton.addEventListener('click', function() {
+	    gameStarted = true;
+	    gameInterval = setInterval(updateGame, 200);
+    });
+    
+    document.getElementById('reset-button').addEventListener('click', resetGame);
+});
+
+ window.addEventListener('keydown', function(e) {
     switch (e.key) {
         case 'ArrowUp':
             if (direction !== 'down') direction = 'up';
@@ -193,16 +205,6 @@ window.addEventListener('keydown', function(e) {
             if (direction !== 'left') direction = 'right';
             break;
     }
-});
-	    
-document.addEventListener('DOMContentLoaded', (event) => {
-    let startButton = document.getElementById('start-button');
-    startButton.addEventListener('click', function() {
-	    gameStarted = true;
-	    gameInterval = setInterval(updateGame, 200);
-    });
-    
-    document.getElementById('reset-button').addEventListener('click', resetGame);
 });
 </script>
 </body>
