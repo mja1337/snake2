@@ -258,11 +258,10 @@ function resetGame() {
         
         document.addEventListener('DOMContentLoaded', (event) => {
             startButton.addEventListener('click', function() {
-                if (gameStarted) {
-                    return;
-                    }
+    if (gameStarted) {
+        return;
+    }
 
-    resetGame();
     gameStarted = true;
     gameInterval = setInterval(updateGame, intervalDuration);
     gameOverText.classList.add('hidden');
@@ -274,7 +273,7 @@ function resetGame() {
 });
 
 resetButton.addEventListener('click', function() {
-    if (!gameStarted) {
+    if (gameStarted) {
         return;
     }
 
@@ -285,6 +284,7 @@ resetButton.addEventListener('click', function() {
     leftButton.disabled = true;
     rightButton.disabled = true;
 });
+
 
         
             upButton.addEventListener('click', handleButtonPress);
