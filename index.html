@@ -6,9 +6,10 @@
 	position: relative;
 	display: flex;
 	align-items: center;
-        justify-content: flex-start;
+        justify-content: center;
 	height: 300px;
 	width: 300px;
+	margin: 0 auto;
     }
     #game-board {
 	position: relative;
@@ -17,6 +18,10 @@
         border: 1px solid black;
     }
     #game-over {
+  	position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         font-size: 48px;
         color: red;
     }
