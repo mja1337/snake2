@@ -65,10 +65,10 @@
         <div id="game-over" class="hidden">Wasted</div>
     </div>
     <div id="buttons-container">
-        <button id="up-button">&#8593;</button>
-        <button id="down-button">&#8595;</button>
-        <button id="left-button">&#8592;</button>
-        <button id="right-button">&#8594;</button>
+        <button id="up-button">Up</button>
+        <button id="down-button">Down</button>
+        <button id="left-button">Left</button>
+        <button id="right-button">Right</button>
         <button id="start-button">Start</button>
         <button id="reset-button">Reset</button>
     </div>
@@ -93,6 +93,7 @@
         let downButton = document.getElementById('down-button');
         let leftButton = document.getElementById('left-button');
         let rightButton = document.getElementById('right-button');
+        let startButton = document.getElementById('start-button');
         let resetButton = document.getElementById('reset-button');
         
         function updateGame() {
@@ -168,6 +169,11 @@
         function gameOver() {
             clearInterval(gameInterval);
             gameOverText.classList.remove('hidden');
+            resetButton.disabled = false; // Enable reset button
+            upButton.disabled = true;
+            downButton.disabled = true;
+            leftButton.disabled = true;
+            rightButton.disabled = true;
         }
         
         function renderGame() {
@@ -212,6 +218,11 @@
             if (typeof gameInterval !== 'undefined') clearInterval(gameInterval);
             score = 0; // reset score
             scoreDisplay.textContent = 'Score: ' + score; // update score display
+            resetButton.disabled = true; // Disable reset button
+            upButton.disabled = false;
+            downButton.disabled = false;
+            leftButton.disabled = false;
+            rightButton.disabled = false;
         }
         
         function handleButtonPress(e) {
@@ -236,8 +247,6 @@
         }
         
         document.addEventListener('DOMContentLoaded', (event) => {
-            let startButton = document.getElementById('start-button');
-        
             startButton.addEventListener('click', function() {
                 if (gameStarted) {
                     return;
