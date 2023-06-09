@@ -62,7 +62,7 @@
 <body>
     <div id="game-container">
         <div id="game-board"></div>
-        <div id="game-over" class="hidden">Wasted</div>
+        <div id="game-over" class="hidden">Game Over</div>
     </div>
     <div id="buttons-container">
         <button id="up-button">Up</button>
@@ -163,13 +163,6 @@
         
             renderGame();
             scoreDisplay.textContent = 'Score: ' + score; // update score display
-        
-            // Check if the current score is higher than the stored high score
-            if (score > highScore) {
-                highScore = score;
-                localStorage.setItem('snakeHighScore', highScore);
-                highScoreDisplay.textContent = 'High Score: ' + highScore;
-            }
         }
         
         function gameOver() {
@@ -245,10 +238,6 @@
         document.addEventListener('DOMContentLoaded', (event) => {
             let startButton = document.getElementById('start-button');
             let resetButton = document.getElementById('reset-button');
-            let upButton = document.getElementById('up-button');
-            let downButton = document.getElementById('down-button');
-            let leftButton = document.getElementById('left-button');
-            let rightButton = document.getElementById('right-button');
         
             startButton.addEventListener('click', function() {
                 if (gameStarted) {
