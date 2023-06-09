@@ -64,10 +64,10 @@
         <div id="game-board"></div>
         <div id="game-over" class="hidden">Wasted</div>
     </div>
-    <div id="buttons-container">
-        <button id="up-button">Up</button>
-        <button id="down-button">Down</button>
+    <div id="buttons-container">  
         <button id="left-button">Left</button>
+        <button id="down-button">Down</button>
+        <button id="up-button">Up</button>
         <button id="right-button">Right</button>
         <button id="start-button">Start</button>
         <button id="reset-button">Reset</button>
@@ -209,14 +209,14 @@
         }
         
 function resetGame() {
+    clearInterval(gameInterval);
+    gameInterval = null;
     direction = 'right';
     snake = [{ top: 0, left: 0 }];
     poop = [];
     food = null;
     gameStarted = false;
     gameOverText.classList.add('hidden');
-    clearInterval(gameInterval);
-    gameInterval = null;
     score = 0;
     scoreDisplay.textContent = 'Score: ' + score;
     resetButton.disabled = true;
@@ -225,8 +225,6 @@ function resetGame() {
     leftButton.disabled = false;
     rightButton.disabled = false;
 }
-
-
         
         function handleButtonPress(e) {
             if (!gameStarted) {
