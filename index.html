@@ -2,11 +2,10 @@
 <html>
 <head>
     <style>
-    /* ... Paste your CSS here ... */
     #game-board {
         position: relative;
-        height: 600px;
-        width: 600px;
+        height: 300px;
+        width: 300px;
         border: 1px solid black;
     }
 
@@ -44,25 +43,35 @@
         font-size: 48px;
         color: red;
     }
+	    
+    #start-button {
+	    position: absolute;
+	    top: 150px;
+	    left: 100px;
+    }
 	
     </style>
 </head>
 <body>
     <div id="game-board"></div>
     <div id="game-over" class="hidden">Game Over</div>
+    <button id="start-button">Start</button>
     <button id="reset-button">Reset</button>
     <script>
 let dotSize = 20;
-let gameBoardSize = 600;
+let gameBoardSize = 300;
 let direction = 'right';
 let snake = [{ top: 0, left: 0 }];
 let poop = [];
 let food = null;
+let gameStarted = false;
 
 let gameBoard = document.getElementById('game-board');
 let gameOverText = document.getElementById('game-over');
+let startButton = document.getElementById('start-button');
 
 function updateGame() {
+if (!gameStarted) return;
     let head = Object.assign({}, snake[0]); // copy head
     switch (direction) {
         case 'right':
@@ -159,11 +168,16 @@ function resetGame() {
     snake = [{ top: 0, left: 0 }];
     poop = [];
     food = null;
+    gameStarted = false;
     gameOverText.classList.add('hidden');
     if (typeof gameInterval !== 'undefined') clearInterval(gameInterval);
-    gameInterval = setInterval(updateGame, 200);
 }
 
+startButton.addEventListener('click', function() {
+	gameStarted = true;
+	gameInterval = setInterval(updateGame, 200);
+});
+	    
 let gameInterval = setInterval(updateGame, 200);
 
 window.addEventListener('keydown', function(e) {
