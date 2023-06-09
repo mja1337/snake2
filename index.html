@@ -14,12 +14,13 @@
         border: 1px solid black;
     }
     #game-over {
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 48px;
-        color: red;
-	margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+    color: red;
+    visibility: hidden; /* Hide the element initially */
     }
 	    
     #controls {
@@ -225,8 +226,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 function gameOver() {
     clearInterval(gameInterval);
-    gameOverText.classList.remove('hidden');
+    gameOverText.style.visibility = 'visible'; // Show the "wasted" text
+    gameOverText.style.top = '50%'; // Position it in the middle vertically
+    gameOverText.style.left = '50%'; // Position it in the middle horizontally
+    gameOverText.style.transform = 'translate(-50%, -50%)'; // Center the text precisely
 }
+
 
 function renderGame() {
     // Clear old dots
