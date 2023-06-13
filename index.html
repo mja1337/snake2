@@ -94,11 +94,15 @@
         let gameOverText = document.getElementById('game-over');
         let scoreDisplay = document.getElementById('score');
         let highScoreDisplay = document.getElementById('high-score');
+		
         let upButton = document.getElementById('up-button');
         let downButton = document.getElementById('down-button');
         let leftButton = document.getElementById('left-button');
         let rightButton = document.getElementById('right-button');
         let startButton = document.getElementById('start-button');
+		
+		let touchStartX = 0;
+		let touchStartY = 0;
         
         function updateGame() {
             if (!gameStarted) {
@@ -255,6 +259,40 @@
                     break;
             }
         }
+		
+		function handleTouchStart(event) {
+			touchStartX = event.touches[0].clientX;
+			touchStartY = event.touches[0].clientY;
+		}
+
+		function handleTouchMove(event) {
+			event.preventDefault(); // Prevent scrolling on touch devices
+		}
+
+		function handleTouchEnd(event) {
+			const touchEndX = event.changedTouches[0].clientX;
+			const touchEndY = event.changedTouches[0].clientY;
+
+			const dx = touchEndX - touchStartX;
+			const dy = touchEndY - touchStartY;
+
+		if (Math.abs(dx) > Math.abs(dy)) {
+        // Horizontal swipe
+        if (dx > 0 && direction !== 'left') {
+            direction = 'right';
+        } else if (dx < 0 && direction !== 'right') {
+            direction = 'left';
+        }
+			} else {
+        // Vertical swipe
+        if (dy > 0 && direction !== 'up') {
+            direction = 'down';
+        } else if (dy < 0 && direction !== 'down') {
+            direction = 'up';
+        }
+    }
+}
+
         
         document.addEventListener('DOMContentLoaded', (event) => {
             startButton.addEventListener('click', function() {
@@ -263,7 +301,14 @@
                 }
         
                 gameStarted = true;
-                gameInterval = setInterval(updateGame, intervalDuration);
+                gameInterval = setInterval(function() {
+					updateGame();
+						if (gameStarted) {
+							clearInterval(gameInterval);
+							gameInterval = setInterval(updateGame, intervalDuration);
+						}
+				}, intervalDuration);
+
                 gameOverText.classList.add('hidden');
                 upButton.disabled = false;
                 downButton.disabled = false;
@@ -276,6 +321,10 @@
             downButton.addEventListener('click', handleButtonPress);
             leftButton.addEventListener('click', handleButtonPress);
             rightButton.addEventListener('click', handleButtonPress);
+			
+			gameBoard.addEventListener('touchstart', handleTouchStart);
+			gameBoard.addEventListener('touchmove', handleTouchMove);
+			gameBoard.addEventListener('touchend', handleTouchEnd);
         
             // Retrieve high score from local storage
             highScore = parseInt(localStorage.getItem('snakeHighScore')) || 0;
