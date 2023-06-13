@@ -322,9 +322,9 @@
             leftButton.addEventListener('click', handleButtonPress);
             rightButton.addEventListener('click', handleButtonPress);
 			
-			gameBoard.addEventListener('touchstart', handleTouchStart);
-			gameBoard.addEventListener('touchmove', handleTouchMove);
-			gameBoard.addEventListener('touchend', handleTouchEnd);
+			document.addEventListener('touchstart', handleTouchStart);
+			document.addEventListener('touchmove', handleTouchMove);
+			document.addEventListener('touchend', handleTouchEnd);
         
             // Retrieve high score from local storage
             highScore = parseInt(localStorage.getItem('snakeHighScore')) || 0;
